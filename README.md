@@ -37,7 +37,7 @@ pnpm install
 Create SQLite database and push schema:
 
 ```sh
-pnpm drizzle-kit push
+pnpm gp
 ```
 
 Run development server:
