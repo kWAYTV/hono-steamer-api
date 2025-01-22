@@ -1,0 +1,20 @@
+ALTER TABLE `steam_profiles` ADD `steam_id` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `online_state` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `state_message` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `privacy_state` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `visibility_state` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `avatar_icon` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `avatar_medium` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `avatar_full` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `vac_banned` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `trade_ban_state` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `is_limited_account` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `member_since` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `steam_rating` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `hours_played_2wk` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `headline` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `location` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `real_name` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `summary` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `most_played_games` text;--> statement-breakpoint
+ALTER TABLE `steam_profiles` ADD `groups` text;

@@ -8,6 +8,27 @@
       "when": 1728133964232,
       "tag": "0000_same_squadron_sinister",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1737565572479,
+      "tag": "0001_tranquil_sprite",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1737566187181,
+      "tag": "0002_ambitious_joshua_kane",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1737567226170,
+      "tag": "0003_fixed_thundra",
+      "breakpoints": true
     }
   ]
 }
