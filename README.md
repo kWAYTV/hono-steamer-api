@@ -1,6 +1,6 @@
 # Hono Steamer API
 
-A fully documented type-safe Steam ID resolver API built with Hono and OpenAPI. Resolves Steam IDs, custom URLs, and caches Steam profile information with a clean CRUD interface.
+A fully documented type-safe Steam ID resolver API built with [Hono](https://hono.dev/) and [OpenAPI](https://www.openapis.org/). Resolves Steam IDs, custom URLs, and caches Steam profile information with a clean CRUD interface.
 
 ## Features
 
@@ -85,6 +85,10 @@ Run tests:
 ```sh
 pnpm test
 ```
+
+## Acknowledgments
+
+Special thanks to [@3urobeat](https://github.com/3urobeat) for the excellent [steamid-resolver](https://github.com/3urobeat/node-steamid-resolver) package, which powers the core Steam ID resolution functionality in this API.
 
 ## License
 
