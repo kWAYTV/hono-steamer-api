@@ -21,6 +21,7 @@
     "@hono/zod-openapi": "^0.18.3",
     "@libsql/client": "^0.14.0",
     "@scalar/hono-api-reference": "^0.5.165",
+    "bumpp": "^9.10.1",
     "dotenv": "^16.4.7",
     "dotenv-expand": "^12.0.1",
     "drizzle-orm": "^0.33.0",
