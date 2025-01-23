@@ -13,15 +13,15 @@ services:
       - DATABASE_URL=file:dev.db
       - DATABASE_AUTH_TOKEN=my-secret-token
     ports:
-      - '3737:3000'
+      - "3737:3000"
     healthcheck:
-      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
+      test: [CMD, curl, -f, "http://localhost:3000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 10s
     logging:
-      driver: 'json-file'
+      driver: json-file
       options:
-        max-size: '10m'
-        max-file: '3'
+        max-size: 10m
+        max-file: "3"
