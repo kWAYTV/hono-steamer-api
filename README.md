@@ -22,7 +22,7 @@ git clone https://github.com/kWAYTV/hono-steamer-api.git
 cd hono-steamer-api
 ```
 
-Create `.env` file:
+Create & fill `.env` file:
 
 ```sh
 cp .env.example .env
@@ -32,12 +32,6 @@ Install dependencies:
 
 ```sh
 pnpm install
-```
-
-Create MySQL database:
-
-```sql
-CREATE DATABASE steam_cache;
 ```
 
 Push schema to database:
@@ -50,19 +44,6 @@ Run development server:
 
 ```sh
 pnpm dev
-```
-
-## Environment Variables
-
-```env
-NODE_ENV=development
-PORT=9999
-LOG_LEVEL=debug
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=your_password_here
-MYSQL_DATABASE=steam_cache
-BEARER_TOKEN=your_bearer_token_here
 ```
 
 ## Endpoints
