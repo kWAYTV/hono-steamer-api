@@ -1,8 +1,6 @@
 import { eq } from "drizzle-orm";
 import {
   customUrlToSteamID64,
-  steamID64ToCustomUrl,
-  steamID64ToFullInfo,
 } from "steamid-resolver";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import * as HttpStatusPhrases from "stoker/http-status-phrases";
@@ -12,67 +10,13 @@ import type {
   RefreshRoute,
   ResolveRoute,
 } from "@/routes/steam/steam.routes";
-import type { SteamInfo } from "@/types/steam";
 
 import db from "@/db";
 import { steamProfiles } from "@/db/schema";
-import { parseInput } from "@/utils/steam.utils";
+import { fetchAndFormatSteamProfile, isProfileEmpty, parseInput } from "@/utils/steam.utils";
 
 // Cache duration in milliseconds (10 minutes)
 const CACHE_DURATION = 10 * 60 * 1000;
-
-function isProfileEmpty(profile: typeof steamProfiles.$inferSelect) {
-  return !profile.onlineState
-    && !profile.stateMessage
-    && !profile.privacyState
-    && !profile.visibilityState
-    && !profile.avatarIcon
-    && !profile.avatarMedium
-    && !profile.avatarFull;
-}
-
-async function fetchAndFormatSteamProfile(steamId64: string): Promise<typeof steamProfiles.$inferInsert | null> {
-  const [customUrl, fullInfo] = await Promise.all([
-    steamID64ToCustomUrl(steamId64),
-    steamID64ToFullInfo(steamId64),
-  ]);
-
-  if (!fullInfo) {
-    return null;
-  }
-
-  // Helper to safely get first array item or undefined
-  const getFirst = <T>(arr: T[] | undefined): T | undefined =>
-    Array.isArray(arr) && arr.length > 0 ? arr[0] : undefined;
-
-  const info = fullInfo as SteamInfo;
-  return {
-    steamId64,
-    customUrl: customUrl || undefined,
-    steamID: getFirst(info.steamID),
-    onlineState: getFirst(info.onlineState),
-    stateMessage: getFirst(info.stateMessage),
-    privacyState: getFirst(info.privacyState),
-    visibilityState: getFirst(info.visibilityState),
-    avatarIcon: getFirst(info.avatarIcon),
-    avatarMedium: getFirst(info.avatarMedium),
-    avatarFull: getFirst(info.avatarFull),
-    vacBanned: getFirst(info.vacBanned),
-    tradeBanState: getFirst(info.tradeBanState),
-    isLimitedAccount: getFirst(info.isLimitedAccount),
-    memberSince: getFirst(info.memberSince),
-    steamRating: getFirst(info.steamRating),
-    hoursPlayed2Wk: getFirst(info.hoursPlayed2Wk),
-    headline: getFirst(info.headline),
-    location: getFirst(info.location),
-    realname: getFirst(info.realname),
-    summary: getFirst(info.summary),
-    // Store arrays as JSON strings
-    mostPlayedGames: info.mostPlayedGames ? JSON.stringify(info.mostPlayedGames) : null,
-    groups: info.groups ? JSON.stringify(info.groups) : null,
-    lastChecked: new Date(),
-  };
-}
 
 export const resolve: AppRouteHandler<ResolveRoute> = async (c) => {
   const { id } = c.req.valid("param");
