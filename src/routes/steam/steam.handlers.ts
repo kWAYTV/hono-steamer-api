@@ -2,7 +2,9 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/lib/types";
 import type { RefreshRoute, ResolveRoute } from "@/routes/steam/steam.routes";
+import type { ApiErrorResponse } from "@/types/steam";
 
+import { STEAM_ERROR_MESSAGES } from "@/lib/constants";
 import { refreshProfile, resolveProfile } from "@/services/steam.services";
 
 export const resolve: AppRouteHandler<ResolveRoute> = async (c) => {
@@ -11,19 +13,28 @@ export const resolve: AppRouteHandler<ResolveRoute> = async (c) => {
   try {
     const result = await resolveProfile(id);
 
-    if ("error" in result) {
-      return c.json({ message: result.error }, HttpStatusCodes.NOT_FOUND);
+    if (!result.success) {
+      return c.json({
+        success: false,
+        message: result.error,
+      } satisfies ApiErrorResponse, HttpStatusCodes.NOT_FOUND);
     }
 
     return c.json({
+      success: true,
       message: "Steam profile resolved",
-      receivedId: result.receivedId,
-      profile: result.profile,
-      cached: result.isCached,
+      data: {
+        profile: result.profile,
+        isCached: result.isCached,
+        receivedId: result.receivedId,
+      },
     }, HttpStatusCodes.OK);
   }
   catch {
-    return c.json({ message: "Failed to resolve Steam ID" }, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+    return c.json({
+      success: false,
+      message: STEAM_ERROR_MESSAGES.RESOLVE_FAILED,
+    } satisfies ApiErrorResponse, HttpStatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -33,13 +44,25 @@ export const refresh: AppRouteHandler<RefreshRoute> = async (c) => {
   try {
     const result = await refreshProfile(id);
 
-    if ("error" in result) {
-      return c.json({ message: result.error }, HttpStatusCodes.NOT_FOUND);
+    if (!result.success) {
+      return c.json({
+        success: false,
+        message: result.error,
+      } satisfies ApiErrorResponse, HttpStatusCodes.NOT_FOUND);
     }
 
-    return c.json(result.profile, HttpStatusCodes.OK);
+    return c.json({
+      success: true,
+      message: "Steam profile refreshed",
+      data: {
+        profile: result.profile,
+      },
+    }, HttpStatusCodes.OK);
   }
   catch {
-    return c.json({ message: "Failed to refresh Steam profile" }, HttpStatusCodes.INTERNAL_SERVER_ERROR);
+    return c.json({
+      success: false,
+      message: STEAM_ERROR_MESSAGES.REFRESH_FAILED,
+    } satisfies ApiErrorResponse, HttpStatusCodes.INTERNAL_SERVER_ERROR);
   }
 };

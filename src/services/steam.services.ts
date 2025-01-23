@@ -5,6 +5,7 @@ import type { ParsedSteamInput, RefreshResult, ResolveResult, ServiceError } fro
 
 import db from "@/db";
 import { steamProfiles } from "@/db/schema";
+import { STEAM_ERROR_MESSAGES } from "@/lib/constants";
 import { fetchAndFormatSteamProfile, isProfileEmpty, parseInput } from "@/utils/steam.utils";
 
 // Cache duration in milliseconds (10 minutes)
@@ -47,12 +48,12 @@ export async function resolveProfile(id: string): Promise<ResolveResult | Servic
     }
 
     if (!steamId64) {
-      return { error: "Invalid, private or not found Steam ID" };
+      return { success: false, error: STEAM_ERROR_MESSAGES.INVALID_ID };
     }
 
     const profileInfo = await fetchAndFormatSteamProfile(steamId64);
     if (!profileInfo) {
-      return { error: "Failed to fetch Steam profile info" };
+      return { success: false, error: STEAM_ERROR_MESSAGES.FETCH_FAILED };
     }
 
     // Update or insert profile in a single operation
@@ -73,11 +74,12 @@ export async function resolveProfile(id: string): Promise<ResolveResult | Servic
   }
 
   if (!profile) {
-    return { error: "Failed to create or update profile" };
+    return { success: false, error: STEAM_ERROR_MESSAGES.CREATE_FAILED };
   }
 
   // Parse JSON fields
   return {
+    success: true,
     profile: {
       ...profile,
       mostPlayedGames: profile.mostPlayedGames ? JSON.parse(profile.mostPlayedGames) : null,
@@ -101,7 +103,7 @@ export async function refreshProfile(id: string): Promise<RefreshResult | Servic
   }
 
   if (!steamId64) {
-    return { error: "Invalid, private or not found Steam ID" };
+    return { success: false, error: STEAM_ERROR_MESSAGES.INVALID_ID };
   }
 
   // Find profile in database
@@ -110,13 +112,13 @@ export async function refreshProfile(id: string): Promise<RefreshResult | Servic
   });
 
   if (!profile) {
-    return { error: "Profile not found" };
+    return { success: false, error: STEAM_ERROR_MESSAGES.PROFILE_NOT_FOUND };
   }
 
   // Force refresh from Steam API
   const profileInfo = await fetchAndFormatSteamProfile(steamId64);
   if (!profileInfo) {
-    return { error: "Failed to fetch Steam profile info" };
+    return { success: false, error: STEAM_ERROR_MESSAGES.FETCH_FAILED };
   }
 
   // Update profile and return updated data in a single operation
@@ -129,11 +131,12 @@ export async function refreshProfile(id: string): Promise<RefreshResult | Servic
   });
 
   if (!updated) {
-    return { error: "Failed to update profile" };
+    return { success: false, error: STEAM_ERROR_MESSAGES.UPDATE_FAILED };
   }
 
   // Parse JSON fields
   return {
+    success: true,
     profile: {
       ...updated,
       mostPlayedGames: updated.mostPlayedGames ? JSON.parse(updated.mostPlayedGames) : null,
