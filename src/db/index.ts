@@ -9,7 +9,7 @@ const connection = await mysql.createConnection({
   user: env.MYSQL_USER,
   password: env.MYSQL_PASSWORD,
   database: env.MYSQL_DATABASE,
-  ssl: env.NODE_ENV === "production" ? {} : undefined,
+  ssl: env.MYSQL_SSL === "true" ? {} : undefined,
 });
 
 const db = drizzle(connection, {

@@ -19,6 +19,7 @@ const EnvSchema = z.object({
   MYSQL_USER: z.string(),
   MYSQL_PASSWORD: z.string(),
   MYSQL_DATABASE: z.string(),
+  MYSQL_SSL: z.enum(["true", "false"]).default("false"),
   BEARER_TOKEN: z.string(),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.MYSQL_PASSWORD) {
