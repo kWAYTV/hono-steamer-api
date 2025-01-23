@@ -111,6 +111,8 @@ pnpm test
 
 ## Acknowledgments
 
+This project is built on top of [hono-open-api-starter](https://github.com/w3cj/hono-open-api-starter) by [@w3cj](https://github.com/w3cj), which provides an excellent foundation for building type-safe APIs with Hono.
+
 Special thanks to [@3urobeat](https://github.com/3urobeat) for the excellent [steamid-resolver](https://github.com/3urobeat/node-steamid-resolver) package, which powers the core Steam ID resolution functionality in this API.
 
 ## License
