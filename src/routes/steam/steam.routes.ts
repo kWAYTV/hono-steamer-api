@@ -1,9 +1,9 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
-import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
-import { createErrorSchema, createMessageObjectSchema, IdParamsSchema } from "stoker/openapi/schemas";
+import { jsonContent } from "stoker/openapi/helpers";
+import { createErrorSchema, createMessageObjectSchema } from "stoker/openapi/schemas";
 
-import { insertSteamProfileSchema, patchSteamProfileSchema, selectSteamProfileSchema } from "@/db/schema";
+import { selectSteamProfileSchema } from "@/db/schema";
 import { notFoundSchema } from "@/lib/constants";
 
 const tags = ["Steam"];
@@ -11,119 +11,6 @@ const tags = ["Steam"];
 // Custom schema for Steam-specific routes that use Steam ID or custom URL
 const SteamIdParamsSchema = z.object({
   id: z.string().min(1).describe("Steam ID or Custom URL"),
-});
-
-export const list = createRoute({
-  path: "/steam",
-  method: "get",
-  security: [{ bearerAuth: [] }],
-  tags,
-  responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      z.array(selectSteamProfileSchema),
-      "The list of Steam profiles",
-    ),
-  },
-});
-
-export const create = createRoute({
-  path: "/steam",
-  method: "post",
-  request: {
-    body: jsonContentRequired(
-      insertSteamProfileSchema,
-      "The Steam profile to create",
-    ),
-  },
-  security: [{ bearerAuth: [] }],
-  tags,
-  responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      selectSteamProfileSchema,
-      "The created Steam profile",
-    ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(insertSteamProfileSchema),
-      "The validation error(s)",
-    ),
-  },
-});
-
-export const getOne = createRoute({
-  path: "/steam/{id}",
-  method: "get",
-  request: {
-    params: IdParamsSchema,
-  },
-  security: [{ bearerAuth: [] }],
-  tags,
-  responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      selectSteamProfileSchema,
-      "The requested Steam profile",
-    ),
-    [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      notFoundSchema,
-      "Steam profile not found",
-    ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(IdParamsSchema),
-      "Invalid id error",
-    ),
-  },
-});
-
-export const patch = createRoute({
-  path: "/steam/{id}",
-  method: "patch",
-  request: {
-    params: IdParamsSchema,
-    body: jsonContentRequired(
-      patchSteamProfileSchema,
-      "The Steam profile updates",
-    ),
-  },
-  security: [{ bearerAuth: [] }],
-  tags,
-  responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      selectSteamProfileSchema,
-      "The updated Steam profile",
-    ),
-    [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      notFoundSchema,
-      "Steam profile not found",
-    ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(patchSteamProfileSchema)
-        .or(createErrorSchema(IdParamsSchema)),
-      "The validation error(s)",
-    ),
-  },
-});
-
-export const remove = createRoute({
-  path: "/steam/{id}",
-  method: "delete",
-  request: {
-    params: IdParamsSchema,
-  },
-  security: [{ bearerAuth: [] }],
-  tags,
-  responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      createMessageObjectSchema("Steam profile deleted"),
-      "Steam profile deleted",
-    ),
-    [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      notFoundSchema,
-      "Steam profile not found",
-    ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(IdParamsSchema),
-      "Invalid id error",
-    ),
-  },
 });
 
 // Special Steam-specific routes
@@ -140,6 +27,7 @@ export const resolve = createRoute({
         message: z.string(),
         receivedId: z.string(),
         profile: selectSteamProfileSchema,
+        cached: z.boolean(),
       }),
       "The resolved Steam profile",
     ),
@@ -188,12 +76,6 @@ export const refresh = createRoute({
     ),
   },
 });
-
-export type ListRoute = typeof list;
-export type CreateRoute = typeof create;
-export type GetOneRoute = typeof getOne;
-export type PatchRoute = typeof patch;
-export type RemoveRoute = typeof remove;
 
 export type ResolveRoute = typeof resolve;
 export type RefreshRoute = typeof refresh;

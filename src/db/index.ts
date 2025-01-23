@@ -1,16 +1,20 @@
-import { createClient } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 
 import * as schema from "@/db/schema";
 import env from "@/env";
 
-const client = createClient({
-  url: env.DATABASE_URL,
-  authToken: env.DATABASE_AUTH_TOKEN,
+const connection = await mysql.createConnection({
+  host: env.MYSQL_HOST,
+  user: env.MYSQL_USER,
+  password: env.MYSQL_PASSWORD,
+  database: env.MYSQL_DATABASE,
+  ssl: env.NODE_ENV === "production" ? {} : undefined,
 });
 
-const db = drizzle(client, {
+const db = drizzle(connection, {
   schema,
+  mode: "default",
 });
 
 export default db;

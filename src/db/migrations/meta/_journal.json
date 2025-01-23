@@ -29,6 +29,13 @@
       "when": 1737567226170,
       "tag": "0003_fixed_thundra",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1737664748368,
+      "tag": "0004_equal_paladin",
+      "breakpoints": true
     }
   ]
 }
