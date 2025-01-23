@@ -8,12 +8,6 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 import * as HttpStatusPhrases from "stoker/http-status-phrases";
 
 import type { AppRouteHandler } from "@/lib/types";
-import type { SteamInfo } from "@/types/steam";
-
-import db from "@/db";
-import { steamProfiles } from "@/db/schema";
-import { parseInput } from "@/utils/steam.utils";
-
 import type {
   CreateRoute,
   GetOneRoute,
@@ -22,7 +16,12 @@ import type {
   RefreshRoute,
   RemoveRoute,
   ResolveRoute,
-} from "./steam.routes";
+} from "@/routes/steam/steam.routes";
+import type { SteamInfo } from "@/types/steam";
+
+import db from "@/db";
+import { steamProfiles } from "@/db/schema";
+import { parseInput } from "@/utils/steam.utils";
 
 function isProfileEmpty(profile: typeof steamProfiles.$inferSelect) {
   return !profile.onlineState
