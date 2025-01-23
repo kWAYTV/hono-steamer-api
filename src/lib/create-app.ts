@@ -21,11 +21,12 @@ export default function createApp() {
   const app = createRouter();
 
   app.use(pinoLogger());
-  app.use("/*", bearerAuth({ token: env.BEARER_TOKEN }));
+  app.use("/api/*", bearerAuth({ token: env.BEARER_TOKEN }));
   app.use("/favicon.ico", serveStatic({ path: "./public/favicon.ico" }));
 
   app.notFound(notFound);
   app.onError(extOnError);
+
   return app;
 }
 

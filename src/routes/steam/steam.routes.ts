@@ -15,7 +15,7 @@ const SteamIdParamsSchema = z.object({
 
 // Special Steam-specific routes
 export const resolve = createRoute({
-  path: "/resolve/{id}",
+  path: "/api/resolve/{id}",
   method: "get",
   request: {
     params: SteamIdParamsSchema,
@@ -50,7 +50,7 @@ export const resolve = createRoute({
 });
 
 export const refresh = createRoute({
-  path: "/refresh/{id}",
+  path: "/api/refresh/{id}",
   method: "post",
   request: {
     params: SteamIdParamsSchema,
