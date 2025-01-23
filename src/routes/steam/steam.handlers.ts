@@ -35,7 +35,7 @@ function isProfileEmpty(profile: typeof steamProfiles.$inferSelect) {
 
 export const list: AppRouteHandler<ListRoute> = async (c) => {
   const profiles = await db.query.steamProfiles.findMany();
-  return c.json(profiles);
+  return c.json(profiles, HttpStatusCodes.OK);
 };
 
 export const create: AppRouteHandler<CreateRoute> = async (c) => {

@@ -16,6 +16,7 @@ const SteamIdParamsSchema = z.object({
 export const list = createRoute({
   path: "/steam",
   method: "get",
+  security: [{ bearerAuth: [] }],
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
@@ -34,6 +35,7 @@ export const create = createRoute({
       "The Steam profile to create",
     ),
   },
+  security: [{ bearerAuth: [] }],
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
@@ -53,6 +55,7 @@ export const getOne = createRoute({
   request: {
     params: IdParamsSchema,
   },
+  security: [{ bearerAuth: [] }],
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
@@ -80,6 +83,7 @@ export const patch = createRoute({
       "The Steam profile updates",
     ),
   },
+  security: [{ bearerAuth: [] }],
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
@@ -104,6 +108,7 @@ export const remove = createRoute({
   request: {
     params: IdParamsSchema,
   },
+  security: [{ bearerAuth: [] }],
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
@@ -123,7 +128,7 @@ export const remove = createRoute({
 
 // Special Steam-specific routes
 export const resolve = createRoute({
-  path: "/steam/resolve/{id}",
+  path: "/resolve/{id}",
   method: "get",
   request: {
     params: SteamIdParamsSchema,
@@ -156,7 +161,7 @@ export const resolve = createRoute({
 });
 
 export const refresh = createRoute({
-  path: "/steam/refresh/{id}",
+  path: "/refresh/{id}",
   method: "post",
   request: {
     params: SteamIdParamsSchema,
@@ -189,5 +194,6 @@ export type CreateRoute = typeof create;
 export type GetOneRoute = typeof getOne;
 export type PatchRoute = typeof patch;
 export type RemoveRoute = typeof remove;
+
 export type ResolveRoute = typeof resolve;
 export type RefreshRoute = typeof refresh;
