@@ -219,7 +219,7 @@ export const resolve: AppRouteHandler<ResolveRoute> = async (c) => {
     };
 
     return c.json({
-      success: true,
+      message: "Steam profile resolved",
       receivedId: id,
       profile: responseProfile,
     }, HttpStatusCodes.OK);

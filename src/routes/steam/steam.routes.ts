@@ -132,7 +132,7 @@ export const resolve = createRoute({
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
       z.object({
-        success: z.boolean(),
+        message: z.string(),
         receivedId: z.string(),
         profile: selectSteamProfileSchema,
       }),
