@@ -4,26 +4,9 @@ import { jsonContent } from "stoker/openapi/helpers";
 import { createErrorSchema } from "stoker/openapi/schemas";
 
 import { selectSteamProfileSchema } from "@/db/schema";
-import { notFoundSchema } from "@/lib/constants";
+import { ApiErrorResponseSchema, ApiSuccessResponseSchema } from "@/helpers/api-response.schemas";
 
 const tags = ["Steam"];
-
-// Response schemas
-const ApiResponseSchema = z.object({
-  success: z.boolean().describe("Whether the request was successful"),
-  message: z.string().describe("Response message"),
-});
-
-const ApiErrorResponseSchema = ApiResponseSchema.extend({
-  success: z.literal(false),
-});
-
-function ApiSuccessResponseSchema<T extends z.ZodType>(dataSchema: T) {
-  return ApiResponseSchema.extend({
-    success: z.literal(true),
-    data: dataSchema,
-  });
-}
 
 // Custom schema for Steam-specific routes that use Steam ID or custom URL
 const SteamIdParamsSchema = z.object({
