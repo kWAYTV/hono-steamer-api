@@ -1,17 +1,17 @@
 # Hono Steamer API
 
-A fully documented type-safe Steam ID resolver API built with [Hono](https://hono.dev/) and [OpenAPI](https://www.openapis.org/). Resolves Steam IDs, custom URLs, and caches Steam profile information with a clean CRUD interface.
+A high-performance Steam profile resolver and caching API built with [Hono](https://hono.dev/), [MySQL](https://www.mysql.com/), and [OpenAPI](https://www.openapis.org/). Optimized for fast lookups with 10-minute smart caching.
 
 ## Features
 
-- Steam ID and Custom URL resolution with caching
-- Full Steam profile information retrieval
-- Type-safe routes with [@hono/zod-openapi](https://github.com/honojs/middleware/tree/main/packages/zod-openapi)
-- Interactive API documentation with [scalar](https://scalar.com/#api-docs)
-- Structured logging with [pino](https://getpino.io/)
-- Type-safe schemas with [drizzle](https://orm.drizzle.team/) and [zod](https://zod.dev/)
-- Clean CRUD operations for Steam profiles
-- Automatic profile refresh after 24 hours
+- ⚡ Lightning-fast Steam ID and Custom URL resolution
+- 🚀 10-minute smart caching with MySQL
+- 📚 Full Steam profile information retrieval
+- 🔒 Type-safe routes with [@hono/zod-openapi](https://github.com/honojs/middleware/tree/main/packages/zod-openapi)
+- 📖 Interactive API documentation with [scalar](https://scalar.com/#api-docs)
+- 📝 Structured logging with [pino](https://getpino.io/)
+- 🛠️ Type-safe schemas with [drizzle](https://orm.drizzle.team/) and [zod](https://zod.dev/)
+- 🔄 Automatic profile refresh after 10 minutes
 
 ## Setup
 
@@ -34,7 +34,13 @@ Install dependencies:
 pnpm install
 ```
 
-Create SQLite database and push schema:
+Create MySQL database:
+
+```sql
+CREATE DATABASE steam_cache;
+```
+
+Push schema to database:
 
 ```sh
 pnpm gp
@@ -46,19 +52,27 @@ Run development server:
 pnpm dev
 ```
 
+## Environment Variables
+
+```env
+NODE_ENV=development
+PORT=9999
+LOG_LEVEL=debug
+MYSQL_HOST=localhost
+MYSQL_USER=root
+MYSQL_PASSWORD=your_password_here
+MYSQL_DATABASE=steam_cache
+BEARER_TOKEN=your_bearer_token_here
+```
+
 ## Endpoints
 
-| Method | Path                | Description                     |
-| ------ | ------------------- | ------------------------------- |
-| GET    | /steam              | List all Steam profiles         |
-| POST   | /steam              | Create a Steam profile          |
-| GET    | /steam/{id}         | Get one Steam profile by id     |
-| PATCH  | /steam/{id}         | Update a Steam profile          |
-| DELETE | /steam/{id}         | Delete a Steam profile          |
-| GET    | /steam/resolve/{id} | Resolve and cache Steam profile |
-| POST   | /steam/refresh/{id} | Force refresh a Steam profile   |
-| GET    | /doc                | OpenAPI Specification           |
-| GET    | /reference          | Scalar API Documentation        |
+| Method | Path          | Description                     |
+| ------ | ------------- | ------------------------------- |
+| GET    | /resolve/{id} | Resolve and cache Steam profile |
+| POST   | /refresh/{id} | Force refresh a Steam profile   |
+| GET    | /doc          | OpenAPI Specification           |
+| GET    | /reference    | Scalar API Documentation        |
 
 ## Steam Profile Information
 
@@ -71,6 +85,15 @@ The API caches and provides access to:
 - Profile details (member since, location, real name)
 - Most played games
 - Group memberships
+
+## Cache System
+
+The API implements a smart caching system:
+
+- 10-minute cache duration for optimal freshness
+- Automatic refresh on cache expiry
+- Force refresh available via `/refresh` endpoint
+- Efficient MySQL storage for cached data
 
 ## Development
 
