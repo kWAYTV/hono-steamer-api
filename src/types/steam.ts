@@ -1,3 +1,5 @@
+import type { steamProfiles } from "@/db/schema";
+
 export interface ParsedSteamInput {
   type: "customUrl" | "steamId64";
   value: string;
@@ -59,4 +61,24 @@ export interface SteamInfo {
       membersOnline?: string[];
     }>;
   }>;
+}
+
+// Service Types
+export interface ServiceError {
+  error: string;
+}
+
+export type ServiceProfile = typeof steamProfiles.$inferSelect & {
+  mostPlayedGames: any;
+  groups: any;
+};
+
+export interface ResolveResult {
+  profile: ServiceProfile;
+  isCached: boolean;
+  receivedId: string;
+}
+
+export interface RefreshResult {
+  profile: ServiceProfile;
 }

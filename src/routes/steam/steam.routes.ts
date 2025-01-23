@@ -21,6 +21,7 @@ export const resolve = createRoute({
     params: SteamIdParamsSchema,
   },
   tags,
+  security: [{ bearerAuth: [] }],
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
       z.object({
@@ -55,6 +56,7 @@ export const refresh = createRoute({
     params: SteamIdParamsSchema,
   },
   tags,
+  security: [{ bearerAuth: [] }],
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
       selectSteamProfileSchema,

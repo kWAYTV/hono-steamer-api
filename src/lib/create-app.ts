@@ -20,8 +20,8 @@ export function createRouter() {
 export default function createApp() {
   const app = createRouter();
 
-  app.use("/steam/*", bearerAuth({ token: env.BEARER_TOKEN }));
   app.use(pinoLogger());
+  app.use("/*", bearerAuth({ token: env.BEARER_TOKEN }));
   app.use("/favicon.ico", serveStatic({ path: "./public/favicon.ico" }));
 
   app.notFound(notFound);
