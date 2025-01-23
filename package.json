@@ -1,7 +1,7 @@
 {
   "name": "hono-steamer-api",
   "type": "module",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "bump": "eslint . --fix && bumpp",
+    "bump": "bumpp",
     "test": "cross-env NODE_ENV=test vitest",
     "build": "tsc && tsc-alias",
     "gen": "drizzle-kit generate",
