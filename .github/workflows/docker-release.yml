@@ -41,4 +41,4 @@ jobs:
             ${{ secrets.REGISTRY_URL }}/${{ secrets.IMAGE_NAME }}:v${{ steps.version.outputs.VERSION }}
             ${{ secrets.REGISTRY_URL }}/${{ secrets.IMAGE_NAME }}:latest
           cache-from: type=gha
-          cache-to: type=gha,mode=max 
+          cache-to: type=gha,mode=max
