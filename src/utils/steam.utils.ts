@@ -57,7 +57,7 @@ export async function fetchAndFormatSteamProfile(steamId64: string): Promise<typ
   return {
     steamId64,
     customUrl: customUrl || undefined,
-    displayName: getFirst(info.displayName),
+    displayName: getFirst(info.steamID),
     onlineState: getFirst(info.onlineState),
     stateMessage: getFirst(info.stateMessage),
     privacyState: getFirst(info.privacyState),

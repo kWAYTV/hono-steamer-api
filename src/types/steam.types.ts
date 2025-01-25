@@ -44,7 +44,7 @@ export interface SteamProfile {
 
 export interface SteamInfo {
   steamID64?: string[];
-  displayName?: string[];
+  steamID?: string[];
   onlineState?: string[];
   stateMessage?: string[];
   privacyState?: string[];
