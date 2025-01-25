@@ -25,12 +25,12 @@ export default function createApp() {
   app.use(pinoLogger());
   app.use(
     csrf({
-      origin: env.CSRF_ORIGIN,
+      origin: env.BASE_URL,
     }),
   );
   app.use(
     cors({
-      origin: env.CORS_ORIGIN,
+      origin: env.BASE_URL,
       allowHeaders: ["Content-Type", "Authorization"],
       allowMethods: ["POST", "GET", "OPTIONS"],
       exposeHeaders: ["Content-Length"],

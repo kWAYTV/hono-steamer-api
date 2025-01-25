@@ -24,13 +24,8 @@ const EnvSchema = z.object({
 
   BEARER_TOKEN: z.string(),
 
-  // Origin URLs
-  CORS_ORIGIN: z.string().default(
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://steam.kway.club",
-  ),
-  CSRF_ORIGIN: z.string().default(
+  // Base URL for CORS and CSRF
+  BASE_URL: z.string().default(
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
       : "https://steam.kway.club",
