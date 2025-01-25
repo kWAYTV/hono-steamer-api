@@ -38,6 +38,9 @@ importers:
       hono-pino:
         specifier: ^0.7.0
         version: 0.7.0(hono@4.6.15)(pino@9.6.0)
+      hono-rate-limiter:
+        specifier: ^0.4.2
+        version: 0.4.2(hono@4.6.15)
       mysql2:
         specifier: ^3.12.0
         version: 3.12.0
@@ -2013,6 +2016,11 @@ packages:
     peerDependencies:
       hono: '>=4.0.0'
       pino: '>=7.1.0'
+
+  hono-rate-limiter@0.4.2:
+    resolution: {integrity: sha512-AAtFqgADyrmbDijcRTT/HJfwqfvhalya2Zo+MgfdrMPas3zSMD8SU03cv+ZsYwRU1swv7zgVt0shwN059yzhjw==}
+    peerDependencies:
+      hono: ^4.1.1
 
   hono@4.6.15:
     resolution: {integrity: sha512-OiQwvAOAaI2JrABBH69z5rsctHDzFzIKJge0nYXgtzGJ0KftwLWcBXm1upJC23/omNRtnqM0gjRMbtXshPdqhQ==}
@@ -4924,6 +4932,10 @@ snapshots:
       defu: 6.1.4
       hono: 4.6.15
       pino: 9.6.0
+
+  hono-rate-limiter@0.4.2(hono@4.6.15):
+    dependencies:
+      hono: 4.6.15
 
   hono@4.6.15: {}
 

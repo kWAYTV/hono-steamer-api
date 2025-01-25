@@ -1,5 +1,6 @@
 import { serveStatic } from "@hono/node-server/serve-static";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import { rateLimiter } from "hono-rate-limiter";
 import { bearerAuth } from "hono/bearer-auth";
 import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
@@ -38,6 +39,16 @@ export default function createApp() {
       credentials: true,
     }),
   );
+  app.use(
+    rateLimiter({
+      windowMs: 1 * 60 * 1000, // 1 minute
+      limit: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+      standardHeaders: "draft-6", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+      keyGenerator: () => "<unique_key>", // Method to generate custom identifiers for clients.
+      message: { success: false, message: "Too many requests, try again later" },
+    }),
+  );
+
   app.use("/api/*", bearerAuth({ token: env.BEARER_TOKEN }));
   app.use("/favicon.ico", serveStatic({ path: "./public/favicon.ico" }));
 
