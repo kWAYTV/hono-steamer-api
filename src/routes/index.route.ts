@@ -1,8 +1,9 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent } from "stoker/openapi/helpers";
 import { createMessageObjectSchema } from "stoker/openapi/schemas";
 
+import { ApiSuccessResponseSchema } from "@/helpers/api-response.schemas";
 import { createRouter } from "@/lib/create-app";
 
 const router = createRouter()
@@ -13,14 +14,22 @@ const router = createRouter()
       path: "/",
       responses: {
         [HttpStatusCodes.OK]: jsonContent(
-          createMessageObjectSchema("Steamer API"),
+          ApiSuccessResponseSchema(z.object({
+            message: z.string().describe("API welcome message"),
+            serverTime: z.string().describe("Server time"),
+          })),
           "Steamer API Index",
         ),
       },
     }),
     (c) => {
       return c.json({
-        message: "Steamer API",
+        success: true as const,
+        data: {
+          message: "Steamer API",
+          serverTime: new Date().toISOString(),
+        },
+        message: "Welcome to Steamer API",
       }, HttpStatusCodes.OK);
     },
   );
