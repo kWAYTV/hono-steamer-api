@@ -26,9 +26,9 @@ const EnvSchema = z.object({
 
   // Base URL for CORS and CSRF
   BASE_URL: z.string().default(
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://steam.kway.club",
+    process.env.NODE_ENV === "production"
+      ? "https://steam.kway.club"
+      : "http://localhost:3000",
   ),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.MYSQL_PASSWORD) {
