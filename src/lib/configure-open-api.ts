@@ -11,7 +11,6 @@ export default function configureOpenAPI(app: AppOpenAPI) {
       version: packageJSON.version,
       title: "Steamer API",
     },
-    security: [{ bearerAuth: [] }],
   });
 
   app.openAPIRegistry.registerComponent("securitySchemes", "bearerAuth", {
