@@ -15,12 +15,26 @@ const EnvSchema = z.object({
   NODE_ENV: z.string().default("development"),
   PORT: z.coerce.number().default(9999),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]),
+
   MYSQL_HOST: z.string(),
   MYSQL_USER: z.string(),
   MYSQL_PASSWORD: z.string(),
   MYSQL_DATABASE: z.string(),
   MYSQL_SSL: z.enum(["true", "false"]).default("false"),
+
   BEARER_TOKEN: z.string(),
+
+  // Origin URLs
+  CORS_ORIGIN: z.string().default(
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://steam.kway.club",
+  ),
+  CSRF_ORIGIN: z.string().default(
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://steam.kway.club",
+  ),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.MYSQL_PASSWORD) {
     ctx.addIssue({
