@@ -14,9 +14,9 @@ High-performance Steam profile resolver and caching API built with modern TypeSc
 
 - **Framework**: [Hono](https://hono.dev/) with [@hono/zod-openapi](https://github.com/honojs/middleware)
 - **Database**: MySQL with [Drizzle ORM](https://orm.drizzle.team/)
-- **Documentation**: [Scalar](https://scalar.com/docs/api-reference)
+- **Documentation**: [Scalar](https://guides.scalar.com/scalar/introduction)
 - **Validation**: [Zod](https://zod.dev/)
-- **Logging**: [Pino](https://getpino.io/)
+- **Logging**: [Pino](https://getpino.io/) with [hono-pino](https://github.com/maou-shonen/hono-pino)
 
 ## Quick Start
 
