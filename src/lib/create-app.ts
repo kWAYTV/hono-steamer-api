@@ -5,7 +5,7 @@ import { csrf } from "hono/csrf";
 import { notFound } from "stoker/middlewares";
 import { defaultHook } from "stoker/openapi";
 
-import type { AppBindings, AppOpenAPI } from "@/lib/types";
+import type { AppBindings, AppOpenAPI } from "@/types/app.types";
 
 import env from "@/env";
 import { extOnError } from "@/helpers/ext-on-error";

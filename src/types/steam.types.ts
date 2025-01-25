@@ -1,22 +1,8 @@
 import type { steamProfiles } from "@/db/schema";
 
-// Base API Response Types
-export interface ApiResponse {
-  success: boolean;
-  message: string;
-}
+import type { ApiSuccessResponse } from "./api.types";
 
-export interface ApiErrorResponse extends ApiResponse {
-  success: false;
-  message: string;
-}
-
-export interface ApiSuccessResponse<T> extends ApiResponse {
-  success: true;
-  message: string;
-  data: T;
-}
-
+// Steam Input Types
 export interface ParsedSteamInput {
   type: "customUrl" | "steamId64";
   value: string;
@@ -109,16 +95,12 @@ export interface SteamInfo {
 }
 
 // Service Types
-export interface ServiceError {
-  success: false;
-  error: string;
-}
-
 export type ServiceProfile = typeof steamProfiles.$inferSelect & {
   mostPlayedGames: MostPlayedGame[] | null;
   groups: SteamGroup[] | null;
 };
 
+// Steam Service Response Types
 export interface ResolveResult {
   success: true;
   profile: ServiceProfile;
@@ -131,7 +113,7 @@ export interface RefreshResult {
   profile: ServiceProfile;
 }
 
-// API Response Types
+// Steam API Response Types
 export interface ResolveResponse extends ApiSuccessResponse<{
   profile: ServiceProfile;
   isCached: boolean;

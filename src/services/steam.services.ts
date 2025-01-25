@@ -1,7 +1,8 @@
 import { eq } from "drizzle-orm";
 import { customUrlToSteamID64 } from "steamid-resolver";
 
-import type { ParsedSteamInput, RefreshResult, ResolveResult, ServiceError } from "@/types/steam";
+import type { ServiceError } from "@/types/api.types";
+import type { ParsedSteamInput, RefreshResult, ResolveResult } from "@/types/steam.types";
 
 import db from "@/db";
 import { steamProfiles } from "@/db/schema";

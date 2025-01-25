@@ -1,8 +1,8 @@
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
-import type { AppRouteHandler } from "@/lib/types";
 import type { RefreshRoute, ResolveRoute } from "@/routes/steam/steam.routes";
-import type { ApiErrorResponse } from "@/types/steam";
+import type { ApiErrorResponse } from "@/types/api.types";
+import type { AppRouteHandler } from "@/types/app.types";
 
 import { STEAM_ERROR_MESSAGES } from "@/lib/constants";
 import { refreshProfile, resolveProfile } from "@/services/steam.services";

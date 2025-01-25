@@ -1,7 +1,7 @@
 import { steamID64ToCustomUrl, steamID64ToFullInfo } from "steamid-resolver";
 
 import type { steamProfiles } from "@/db/schema";
-import type { ParsedSteamInput, SteamInfo } from "@/types/steam";
+import type { ParsedSteamInput, SteamInfo } from "@/types/steam.types";
 
 export function parseInput(id: string): ParsedSteamInput {
   // Remove trailing slashes
