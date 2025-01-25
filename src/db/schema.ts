@@ -6,7 +6,7 @@ export const steamProfiles = mysqlTable("steam_profiles", {
   steamId64: varchar("steam_id64", { length: 32 }).notNull().unique(),
   customUrl: varchar("custom_url", { length: 255 }),
   // Steam Info
-  steamID: varchar("steam_id", { length: 32 }),
+  displayName: varchar("display_name", { length: 32 }),
   onlineState: varchar("online_state", { length: 32 }),
   stateMessage: varchar("state_message", { length: 255 }),
   privacyState: varchar("privacy_state", { length: 32 }),
